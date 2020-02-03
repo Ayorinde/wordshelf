@@ -5,7 +5,7 @@
 import React from 'react';
 import {
     TextInput, StyleSheet, ScrollView, 
-    View, Text
+    View, Text, TouchableHighlight
   } from 'react-native';
 
 import {colors} from '../styles/colors';
@@ -22,8 +22,14 @@ const Home = ({navigation}) =>{
     <>
       <View style={styles.container}>
         <Text style={styles.header}>Our Clients</Text>
-        <Text style={[styles.topLink, styles.rightLink]}>Add</Text>
-        <Text style={[styles.topLink, styles.leftLink]}>Profile</Text>
+
+        <TouchableHighlight  style={styles.floatTopRight}>
+            <Text style={styles.topLink}>Add</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight  style={styles.floatTopLeft}>
+            <Text style={styles.topLink}>Profile</Text>
+        </TouchableHighlight>
         <TextInput style={styles.searchInput} placeholder="Search ..."/>
 
         <View style={styles.list}>
@@ -65,19 +71,22 @@ const styles = StyleSheet.create({
     color: colors.light,
     flex: 10,
   },
+  floatTopRight: {
+      position: 'absolute',
+      top: 20,
+      right: 18
+  },
+  floatTopLeft: {
+      position: 'absolute',
+      top: 20,
+      left: 18
+  },
+
   topLink: {
-    position: 'absolute',
-    top: 20,
-    color: colors.light3,
     fontSize: 16,
-    fontWeight: 'bold'     
+    fontWeight: 'bold',
+    color: colors.light3,
   },
-  rightLink: {
-      right: 18,
-  },
-  leftLink: {
-    left: 18,
-  }
 });
 
 export default Home;
