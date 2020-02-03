@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
     },
     cardBodyText: {
-    color: colors.grayDark,
+    color: colors.light3,
     fontSize: 16,
     }
 })

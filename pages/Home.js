@@ -22,6 +22,8 @@ const Home = ({navigation}) =>{
     <>
       <View style={styles.container}>
         <Text style={styles.header}>Our Clients</Text>
+        <Text style={[styles.topLink, styles.rightLink]}>Add</Text>
+        <Text style={[styles.topLink, styles.leftLink]}>Profile</Text>
         <TextInput style={styles.searchInput} placeholder="Search ..."/>
 
         <View style={styles.list}>
@@ -63,6 +65,19 @@ const styles = StyleSheet.create({
     color: colors.light,
     flex: 10,
   },
+  topLink: {
+    position: 'absolute',
+    top: 20,
+    color: colors.light3,
+    fontSize: 16,
+    fontWeight: 'bold'     
+  },
+  rightLink: {
+      right: 18,
+  },
+  leftLink: {
+    left: 18,
+  }
 });
 
 export default Home;
