@@ -7,8 +7,8 @@ export const CardList = ({list, onSelect}) => {
 
     return list.map((item) => {
         return (<View style={styles.cardContainer} key={item.id}>
-          <TouchableHighlight onPress={onSelect} underlayColor={colors.primaryLight}>
-            <Card item={item}  />
+          <TouchableHighlight onPress={()=> onSelect(item)} underlayColor={colors.primaryLight}>
+            <Card item={item} />
           </TouchableHighlight>
         </View>)
     })

@@ -4,8 +4,8 @@
 
 import React from 'react';
 import {
-    TextInput, SafeAreaView, StyleSheet, ScrollView, 
-    View, Text, StatusBar, TouchableHighlight
+    TextInput, StyleSheet, ScrollView, 
+    View, Text
   } from 'react-native';
 
 import {colors} from '../styles/colors';
@@ -14,8 +14,8 @@ import {CardList} from '../components/CardList';
 
 
 const Home = ({navigation}) =>{
-  const onSelect = () =>{
-    navigation.navigate('Details')
+  const onSelect = (item) =>{
+    navigation.navigate('Details', item);
   }
 
   return (
