@@ -23,7 +23,7 @@ const Home = ({navigation}) =>{
       <View style={styles.container}>
         <Text style={styles.header}>Our Clients</Text>
 
-        <TouchableHighlight  style={styles.floatTopRight}>
+        <TouchableHighlight  style={styles.floatTopRight} onPress={() => navigation.navigate('Signup')}>
             <Text style={styles.topLink}>Add</Text>
         </TouchableHighlight>
 
