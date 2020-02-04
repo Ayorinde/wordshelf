@@ -13,15 +13,9 @@ export default Signup = ({navigation}) => {
 
     const doSignup = async () =>{
         //handle signup
-        console.log(JSON.stringify({firstName: firstName.value, lastName: lastName.value, 
-            email: email.value, password: password.value}, null, 4)
-        )
         let response = await signup({email: email.value, password: password.value, 
-            firstName: firstName.value, lastName: lastName.value});
-        console.log('response: ', JSON.stringify(response, null, 4))
-        
+            firstName: firstName.value, lastName: lastName.value});        
     }
-
 
     return (
       <View style={styles.container}>
