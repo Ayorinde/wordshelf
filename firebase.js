@@ -32,6 +32,17 @@ export const signup = async ({email, password, firstName, lastName}) => {
         //handle error     
     }
 }
+export const signin = async ({email, password}) => {
+    let signinResponse;
+    try {
+        signinResponse = await auth.signInWithEmailAndPassword(email, password);
+        //handle success
+        
+    } catch (error) {
+        console.log('error signing in: ', error);
+        //handle error     
+    }
+}
  
 
 
