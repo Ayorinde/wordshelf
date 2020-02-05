@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableHighlight, StyleSheet} from 'react-native';
+import {View, TouchableHighlight, Text, StyleSheet} from 'react-native';
 import {colors} from '../styles/colors';
 import {Card} from './Card';
 import { TextInput } from 'react-native-gesture-handler';
@@ -8,7 +8,7 @@ export const CardList = ({list, onSelect}) => {
 
   if(!list || !list.length){
     return (<View style={styles.cardContainer}>
-      <Text>No clients to show at the moment</Text>
+      <Text style={{color: colors.light2}}>No clients to show at the moment</Text>
     </View>)
   }
 

@@ -15,15 +15,23 @@ import {CardList} from '../components/CardList';
 import {getClients} from '../firebase';
 
 const Home = ({navigation}) =>{
+  const [clients, setClients] = useState([])
+
   const onSelect = (item) =>{
     navigation.navigate('Details', item);
   }
 
   useEffect(()=>{
-    getClients();
+    const clientsRequest = async() =>{
+      const theClients = await getClients();
+      console.log('done getting clients: ',theClients);
+      setClients(theClients);
+      
+    }
+    clientsRequest();
     //set result to state
 
-  })
+  },[])
 
   return (
     <>
@@ -41,7 +49,7 @@ const Home = ({navigation}) =>{
 
         <View style={styles.list}>
           <ScrollView>
-            <CardList list={companies} onSelect={onSelect} />
+            <CardList list={clients} onSelect={onSelect} />
           </ScrollView>  
         </View>
       </View>

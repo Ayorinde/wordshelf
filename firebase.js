@@ -50,11 +50,13 @@ export const signin = async ({email, password}) => {
 export const getClients = async() => {
     try {
       let allClientsSnapshot = await firestore.collection("clients").get();
+      let clientsArray = []
       allClientsSnapshot.forEach(function(doc) {
         let collectionObject = doc.data();
         let allClients = {id: doc.id, ...collectionObject}
-        return allClients;
+        clientsArray.push(allClients)
       });
+      return clientsArray;
     } catch (error) {
         console.log('error getting clients: ', error)    
     }
@@ -63,7 +65,7 @@ export const getClients = async() => {
 export const addClient = async(clientObject) => {
     try {
         //dispatch({type: 'FETCHING'})
-        await firestore.collection("clients").add({clientObject});
+        await firestore.collection("clients").add({...clientObject});
         //dispatch({type: 'SUCCESS'})
     
     } catch (error) {
@@ -72,9 +74,6 @@ export const addClient = async(clientObject) => {
         console.log('error getting clients: ', error)    
     }
 }
- 
-
-
 
 
 
