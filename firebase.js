@@ -1,19 +1,22 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDdUBQme0qQF2-80AtMd36LK6m1siISm9s",
-    authDomain: "ourclientslog.firebaseapp.com",
-    databaseURL: "https://ourclientslog.firebaseio.com",
-    projectId: "ourclientslog",
-    storageBucket: "ourclientslog.appspot.com",
-    messagingSenderId: "865505289154",
-    appId: "1:865505289154:web:91528869401b0e63d62c5b",
-    measurementId: "G-LWWM4FXVJR"
+import {config} from './secret'
+let {apiKey, authDomain, databaseURL, projectId, storageBucket, messagingSenderId, appId, measurementId} = config;
+let firebaseConfig = {
+    apiKey,
+    authDomain,
+    databaseURL,
+    projectId,
+    storageBucket,
+    messagingSenderId,
+    appId,
+    measurementId
   };
   
 //firebase.analytics();
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+if(!firebase.apps.length){
+    firebase.initializeApp(firebaseConfig);
+}
 
 export const storage = firebase.storage();
 export const auth = firebase.auth();
@@ -41,6 +44,32 @@ export const signin = async ({email, password}) => {
     } catch (error) {
         console.log('error signing in: ', error);
         //handle error     
+    }
+}
+
+export const getClients = async() => {
+    try {
+      let allClientsSnapshot = await firestore.collection("clients").get();
+      allClientsSnapshot.forEach(function(doc) {
+        let collectionObject = doc.data();
+        let allClients = {id: doc.id, ...collectionObject}
+        return allClients;
+      });
+    } catch (error) {
+        console.log('error getting clients: ', error)    
+    }
+}
+
+export const addClient = async(clientObject) => {
+    try {
+        //dispatch({type: 'FETCHING'})
+        await firestore.collection("clients").add({clientObject});
+        //dispatch({type: 'SUCCESS'})
+    
+    } catch (error) {
+        alert('an error .....')
+        //dispatch({type: 'ERROR'})
+        console.log('error getting clients: ', error)    
     }
 }
  

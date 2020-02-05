@@ -2,7 +2,7 @@
  * Our Clients App
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     TextInput, StyleSheet, ScrollView, 
     View, Text, TouchableHighlight
@@ -12,18 +12,25 @@ import {colors} from '../styles/colors';
 import {companies} from '../data/data';
 import {CardList} from '../components/CardList';
 
+import {getClients} from '../firebase';
 
 const Home = ({navigation}) =>{
   const onSelect = (item) =>{
     navigation.navigate('Details', item);
   }
 
+  useEffect(()=>{
+    getClients();
+    //set result to state
+
+  })
+
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.header}>Our Clients</Text>
 
-        <TouchableHighlight  style={styles.floatTopRight} >
+        <TouchableHighlight  style={styles.floatTopRight} onPress={() => navigation.navigate('AddClient')} >
             <Text style={styles.topLink}>Add</Text>
         </TouchableHighlight>
 
