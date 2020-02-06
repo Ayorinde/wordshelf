@@ -6,19 +6,29 @@ import Home from './pages/Home';
 import Details from './pages/Details';
 import Signup from './pages/Signup';
 import AddClient from './pages/AddClient';
+import Profile from './pages/Profile';
+import {AuthProvider} from './state_providers';
 
 const AppNavigator = createStackNavigator(
-    {
-      Home: Home,
-      Details: Details,
-      Signup: Signup,
-      AddClient: AddClient,
-    },
-    {
-      initialRouteName: 'Home',
-      headerMode: 'none'
-    }
-  );
+  {
+    Home: Home,
+    Details: Details,
+    Signup: Signup,
+    AddClient: AddClient,
+    Profile: Profile
+  },
+  {
+    initialRouteName: 'Signup',
+    headerMode: 'none'
+  }
+);
 
-export default createAppContainer(AppNavigator);
+const NavigatorContainer = createAppContainer(AppNavigator);
+
+export default Nav = () => {
+  return (<AuthProvider><NavigatorContainer/></AuthProvider>)
+}
+
+
+
 

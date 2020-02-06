@@ -28,24 +28,29 @@ export const signup = async ({email, password, firstName, lastName}) => {
         signupResponse = await auth.createUserWithEmailAndPassword(email, password);
         let userId = signupResponse.user.uid;
         addUserToDbResponse = await firestore.collection("users").add({email, firstName, lastName, userId});
-        //handle success
+        return {userId, email, firstName, lastName}
         
     } catch (error) {
         console.log('error signing up: ', error);
-        //handle error     
     }
 }
 export const signin = async ({email, password}) => {
     let signinResponse;
     try {
         signinResponse = await auth.signInWithEmailAndPassword(email, password);
-        //handle success
-        
+        return {email}        
     } catch (error) {
         console.log('error signing in: ', error);
-        //handle error     
     }
 }
+
+export const signout = async () =>{
+    try {
+      let signoutResponse = firebase.auth().signOut();      
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  }
 
 export const getClients = async() => {
     try {
@@ -69,7 +74,6 @@ export const addClient = async(clientObject) => {
         //dispatch({type: 'SUCCESS'})
     
     } catch (error) {
-        alert('an error .....')
         //dispatch({type: 'ERROR'})
         console.log('error getting clients: ', error)    
     }

@@ -12,16 +12,20 @@ import {colors} from '../styles/colors';
 import {companies} from '../data/data';
 import {CardList} from '../components/CardList';
 
-import {getClients} from '../firebase';
+import {getClients, signout} from '../firebase';
+import {useContextAuth} from '../state_providers'
 
 const Home = ({navigation}) =>{
-  const [clients, setClients] = useState([])
+  const [clients, setClients] = useState([]);
+  const {auth} = useContextAuth();
+  let {user} = auth;
 
   const onSelect = (item) =>{
     navigation.navigate('Details', item);
   }
 
   useEffect(()=>{
+    //will create store for this as well just as with authentication
     const clientsRequest = async() =>{
       const theClients = await getClients();
       console.log('done getting clients: ',theClients);
@@ -29,8 +33,6 @@ const Home = ({navigation}) =>{
       
     }
     clientsRequest();
-    //set result to state
-
   },[])
 
   return (
@@ -41,11 +43,13 @@ const Home = ({navigation}) =>{
         <TouchableHighlight  style={styles.floatTopRight} onPress={() => navigation.navigate('AddClient')} >
             <Text style={styles.topLink}>Add</Text>
         </TouchableHighlight>
-
-        <TouchableHighlight  style={styles.floatTopLeft} onPress={() => navigation.navigate('Signup')}>
+        {user && (
+          <TouchableHighlight  style={styles.floatTopLeft} onPress={() => navigation.navigate('Profile', user)} >
             <Text style={styles.topLink}>Profile</Text>
-        </TouchableHighlight>
-        <TextInput style={styles.searchInput} placeholder="Search ..."/>
+          </TouchableHighlight>
+        )}
+
+       <TextInput style={styles.searchInput} placeholder="Search ..."/>
 
         <View style={styles.list}>
           <ScrollView>
@@ -96,7 +100,6 @@ const styles = StyleSheet.create({
       top: 20,
       left: 18
   },
-
   topLink: {
     fontSize: 16,
     fontWeight: 'bold',

@@ -14,7 +14,7 @@ export default AddClient = ({navigation}) => {
     const doAddClient = async () =>{
         let response = await addClient({name: name.value, contactName: contactName.value, 
             contactPhone: contactPhone.value, companyDescription: companyDescription.value});
-        console.log('done adding client');        
+        navigation.navigate('Home');       
     }
 
     return (

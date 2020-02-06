@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, Button, TouchableHighlight, StyleSheet} from 'react-native';
 
 import {colors} from '../styles/colors';
-import {signup, signin} from '../firebase';
+import {signin} from '../firebase';
 import {useTextInput} from '../react_hooks'
+
+import {useContextAuth, doSignup, doSignin} from '../state_providers';
+import {auth as firebaseAuth} from '../firebase';
+import { SET_USER } from '../state_providers/constants';
 
 export default Signup = ({navigation}) => {
     const firstName = useTextInput();
@@ -11,13 +15,32 @@ export default Signup = ({navigation}) => {
     const email = useTextInput();
     const password = useTextInput();
 
-    const doSignup = async () =>{
-        let response = await signup({email: email.value, password: password.value, 
-            firstName: firstName.value, lastName: lastName.value});        
+    let {signup, auth, dispatchAuth} = useContextAuth();
+    let {pending} = auth;
+    
+
+    const handleSignup = async () =>{
+        let response = await doSignup(dispatchAuth, {
+          email: email.value, password: password.value, 
+            firstName: firstName.value, lastName: lastName.value
+        });  
+        navigation.navigate('Home', response)      
     }
-    const doLogin = async () =>{
-        let response = await signin({email: email.value, password: password.value});        
+
+    const handleSignin = async () =>{
+      let response = await doSignin(dispatchAuth,{email: email.value, password: password.value}); 
+      navigation.navigate('Home', response);       
     }
+
+    useEffect(()=>{
+      firebaseAuth.onAuthStateChanged(function(user) {
+        if (user) {
+          dispatchAuth({type: SET_USER, payload: user})
+          navigation.navigate('Home')
+        } 
+      });
+      
+    },[])
 
     return (
       <View style={styles.container}>
@@ -57,14 +80,13 @@ export default Signup = ({navigation}) => {
             {...password}
         />
 
-
-
       <View style={styles.buttonSection}>
-        <TouchableHighlight  style={styles.button} onPress={() => doSignup()}>
+        {pending && <Text style={{textAlign: 'center', color: colors.light2}}>... loading ...</Text>}
+        <TouchableHighlight  style={styles.button} onPress={handleSignup}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight  style={styles.button} onPress={() => doLogin()}>
+        <TouchableHighlight  style={styles.button} onPress={handleSignin}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableHighlight>
 
@@ -110,8 +132,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     marginVertical: 2,
-    
-
   },
   buttonText: {
     textAlign: 'center',
