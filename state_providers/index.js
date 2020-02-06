@@ -80,4 +80,4 @@ const doSignout = async (dispatch) =>{
     }       
 }
   
-export { AuthProvider, useContextAuth, doSignup, useSignup, doSignout, doSignin };
+export { AuthProvider, useContextAuth, doSignup, doSignout, doSignin };
